@@ -32,6 +32,12 @@ android {
 }
 
 dependencies {
+    val cameraxVersion = "1.0.0-beta05"
+
+    implementation("androidx.camera:camera-camera2:$cameraxVersion")
+    implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
+    implementation("androidx.camera:camera-view:1.0.0-alpha12")
+    implementation("androidx.camera:camera-extensions:1.0.0-alpha12")
 
     implementation(libs.appcompat)
     implementation(libs.material)
@@ -40,4 +46,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
 }
