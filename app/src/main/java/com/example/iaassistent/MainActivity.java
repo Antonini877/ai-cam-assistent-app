@@ -18,6 +18,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+        // Check and request permissions
+        if (PermissionHelper.allPermissionsGranted(this)) {
+            Toast.makeText(this, "Turn on camera", Toast.LENGTH_SHORT).show();
+
+            // Start your camera or any functionality that requires permissions
+        } else {
+            Toast.makeText(this, "Request permission", Toast.LENGTH_SHORT).show();
+
+            PermissionHelper.requestPermissions(this);
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -25,12 +35,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Check and request permissions
-        if (PermissionHelper.allPermissionsGranted(this)) {
-            // Start your camera or any functionality that requires permissions
-        } else {
-            PermissionHelper.requestPermissions(this);
-        }
+
     }
 
     @Override
@@ -43,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 },
                 () -> {
                     Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT).show();
-                    finish(); // Optionally close the app or disable functionality
+                    finish();
                 });
     }
 }

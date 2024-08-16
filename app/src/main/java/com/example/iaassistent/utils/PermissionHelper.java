@@ -10,8 +10,7 @@ public class PermissionHelper {
 
     private static final int REQUEST_CODE_PERMISSIONS = 1001;
     private static final String[] REQUIRED_PERMISSIONS = new String[]{
-            android.Manifest.permission.CAMERA,
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            android.Manifest.permission.CAMERA
     };
 
     public static boolean allPermissionsGranted(Activity activity) {
