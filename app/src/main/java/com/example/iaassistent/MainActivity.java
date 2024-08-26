@@ -6,11 +6,13 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.camera.view.PreviewView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.iaassistent.utils.PermissionHelper;
+import com.example.iaassistent.services.CameraXService;
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -20,9 +22,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         // Check and request permissions
         if (PermissionHelper.allPermissionsGranted(this)) {
-            Toast.makeText(this, "Turn on camera", Toast.LENGTH_SHORT).show();
 
-            // Start your camera or any functionality that requires permissions
+            PreviewView previewView = findViewById(R.id.camera);
+            CameraXService cameraService = new CameraXService(this, previewView);
+            cameraService.startCamera();
         } else {
             Toast.makeText(this, "Request permission", Toast.LENGTH_SHORT).show();
 
@@ -43,8 +46,11 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         PermissionHelper.handlePermissionsResult(requestCode, grantResults, this,
                 () -> {
-                    // Permissions granted, start your camera or functionality
                     Toast.makeText(this, "Permissions granted!", Toast.LENGTH_SHORT).show();
+
+                    PreviewView previewView = findViewById(R.id.camera);
+                    CameraXService cameraService = new CameraXService(this, previewView);
+                    cameraService.startCamera();
                 },
                 () -> {
                     Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT).show();
