@@ -1,8 +1,7 @@
 package com.example.iaassistent.services;
 
 import android.content.Context;
-import android.widget.Toast;
-
+import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.camera.core.Camera;
 import androidx.camera.core.CameraSelector;
@@ -11,6 +10,8 @@ import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
+
+import com.example.iaassistent.utils.LoggerTags;
 import com.google.common.util.concurrent.ListenableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -30,7 +31,7 @@ public class CameraXService {
                 ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
                 this.bindPreview(cameraProvider);
             } catch (ExecutionException | InterruptedException e) {
-                Toast.makeText(this.context, "Camera provider initialization error", Toast.LENGTH_SHORT).show();
+                Log.e(LoggerTags.CAMERAX_SERVICE.getTag(), "Camera provider initialization error");
             }
         }, ContextCompat.getMainExecutor(this.context));
     }
