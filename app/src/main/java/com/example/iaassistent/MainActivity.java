@@ -12,8 +12,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.iaassistent.utils.PermissionHelper;
-import com.example.iaassistent.services.CameraXService;
+import com.example.iaassistent.services.cam.CameraXService;
 import com.example.iaassistent.utils.LoggerTags;
+import com.example.iaassistent.services.texttospeech.TextToSpeechService;
+//import com.example.iaassistent.services.DummyAssistent;
+import com.example.iaassistent.services.AssistentService;
+
+
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -21,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+        //DummyAssistent assistent = new DummyAssistent();
+
+        TextToSpeechService speecher = new TextToSpeechService(this);
+
+
 
 
         // Check and request permissions
@@ -33,6 +43,18 @@ public class MainActivity extends AppCompatActivity {
             CameraXService cameraService = new CameraXService(this, previewView);
             cameraService.startCamera();
 
+
+            findViewById(R.id.captureImg).setOnClickListener(v -> {
+
+                AssistentService assistent = new AssistentService(this, cameraService);
+                assistent.describe();
+
+                //speecher.speak(
+                //        assistent.call()
+                //);
+
+
+            });
         } else {
             Log.i(LoggerTags.MAIN_ACTIVITY.getTag(), "Pending permission request");
 
